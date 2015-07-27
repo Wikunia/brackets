@@ -1,16 +1,12 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
-/**
- * Based on http://codemirror.net/addon/fold/foldcode.js
- * @author Patrick Oladimeji
- * @date 10/28/13 8:41:46 AM
- * @last modified 20 April 2014
- */
+// Based on http://codemirror.net/addon/fold/foldcode.js
+// Modified by Patrick Oladimeji for Brackets
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4, maxerr: 50 */
 /*global define, brackets, document*/
 define(function (require, exports, module) {
     "use strict";
-    var CodeMirror          = brackets.getModule("thirdparty/CodeMirror2/lib/codemirror"),
+    var CodeMirror          = brackets.getModule("thirdparty/CodeMirror/lib/codemirror"),
         prefs               = require("Prefs");
 
     /**
@@ -88,8 +84,9 @@ define(function (require, exports, module) {
             __isFold: true
         });
 
-        CodeMirror.on(widget, "mousedown", function () {
+        CodeMirror.on(widget, "mousedown", function (e) {
             textRange.clear();
+            e.preventDefault();
         });
 
         textRange.on("clear", function (from, to) {

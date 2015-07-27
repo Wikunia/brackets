@@ -8,36 +8,35 @@
 /*global define, brackets*/
 define(function (require, exports, module) {
     "use strict";
-    var PreferencesManager          = brackets.getModule("preferences/PreferencesManager"),
+    
+    var ProjectManager              = brackets.getModule("project/ProjectManager"),
+        PreferencesManager          = brackets.getModule("preferences/PreferencesManager"),
+        Strings                     = brackets.getModule("strings"),
         prefs                       = PreferencesManager.getExtensionPrefs("code-folding"),
-        foldsKey                    = "code-folding.folds",
+        FOLDS_PREF_KEY              = "code-folding.folds",
         // preference key strings are here for now since they are not used in any UI
         ENABLE_CODE_FOLDING         = "Enable code folding",
         MIN_FOLD_SIZE               = "Minimum fold size",
-        MIN_FOLD_SIZE_HELP          = "Minimum number of lines to allow in a foldable range",
         SAVE_FOLD_STATES            = "Save fold states",
-        SAVE_FOLD_STATES_HELP       = "Save fold states to disk when editor is closed and restore the folds when reopened",
         ALWAYS_USE_INDENT_FOLD      = "Always use indent fold",
-        ALWAYS_USE_INDENT_FOLD_HELP = "Fall back to using level of indentation as a folding guideline if no range finder is found for the current mode.",
-        FADE_FOLD_BUTTONS           = "Fade fold buttons",
-        FADE_FOLD_BUTTONS_HELP      = "Hides the fold buttons unless the mouse is over the gutter",
-        MAX_FOLD_LEVEL              = "Max fold level",
-        MAX_FOLD_LEVEL_HELP         = "Used to limit the number of nested folds to find and collapse when View -> Collapse All is called or Alt is held down when collapsing. Should improve performance for large files.";
+        HIDE_FOLD_BUTTONS           = "Hide fold triangles",
+        MAX_FOLD_LEVEL              = "Max fold level";
 
     //default preference values
     prefs.definePreference("enabled", "boolean", true,
-                           {name: ENABLE_CODE_FOLDING, description: ENABLE_CODE_FOLDING});
+                           {name: ENABLE_CODE_FOLDING, description: Strings.DESCRIPTION_CODE_FOLDING_ENABLED});
     prefs.definePreference("minFoldSize", "number", 2,
-                           {name: MIN_FOLD_SIZE, description: MIN_FOLD_SIZE_HELP});
+                           {name: MIN_FOLD_SIZE, description: Strings.DESCRIPTION_CODE_FOLDING_MIN_FOLD_SIZE});
     prefs.definePreference("saveFoldStates", "boolean", true,
-                           {name: SAVE_FOLD_STATES, description: SAVE_FOLD_STATES_HELP});
+                           {name: SAVE_FOLD_STATES, description: Strings.DESCRIPTION_CODE_FOLDING_SAVE_FOLD_STATES});
     prefs.definePreference("alwaysUseIndentFold", "boolean", false,
-                           {name: ALWAYS_USE_INDENT_FOLD, description: ALWAYS_USE_INDENT_FOLD_HELP});
-    prefs.definePreference("fadeFoldButtons", "boolean", false,
-                           {name: FADE_FOLD_BUTTONS, description: FADE_FOLD_BUTTONS_HELP});
+                           {name: ALWAYS_USE_INDENT_FOLD, description: Strings.DESCRIPTION_CODE_FOLDING_ALWAY_USE_INDENT_FOLD});
+    prefs.definePreference("hideUntilMouseover", "boolean", false,
+                           {name: HIDE_FOLD_BUTTONS, description: Strings.DESCRIPTION_CODE_FOLDING_HIDE_UNTIL_MOUSEOVER});
     prefs.definePreference("maxFoldLevel", "number", 2,
-                           {name: MAX_FOLD_LEVEL, description: MAX_FOLD_LEVEL_HELP});
-    prefs.definePreference("folds", "object", {});
+                           {name: MAX_FOLD_LEVEL, description: Strings.DESCRIPTION_CODE_FOLDING_MAX_FOLD_LEVEL});
+    
+    PreferencesManager.stateManager.definePreference(FOLDS_PREF_KEY, "object", {});
 
     /**
       * Simplifies the fold ranges into an array of pairs of numbers.
@@ -76,6 +75,17 @@ define(function (require, exports, module) {
 
         return ranges;
     }
+    
+    /**
+     * Returns a 'context' object for getting/setting project-specific view state preferences.
+     * Similar to code in MultiRangeInlineEditor._getPrefsContext()...
+     */
+    function getViewStateContext() {
+        var projectRoot = ProjectManager.getProjectRoot();  // note: null during unit tests!
+        return { location : { scope: "user",
+                              layer: "project",
+                              layerID: projectRoot && projectRoot.fullPath } };
+    }
 
     /**
       * Gets the line folds saved for the specified path.
@@ -83,7 +93,8 @@ define(function (require, exports, module) {
       * @return {Object} the line folds for the document at the specified path
       */
     function getFolds(path) {
-        var folds = (PreferencesManager.getViewState(foldsKey) || {});
+        var context = getViewStateContext();
+        var folds = PreferencesManager.getViewState(FOLDS_PREF_KEY, context);
         return inflate(folds[path]);
     }
 
@@ -93,9 +104,10 @@ define(function (require, exports, module) {
       * @param {Object} folds the fold ranges to save for the current document
       */
     function setFolds(path, folds) {
-        var allFolds = PreferencesManager.getViewState(foldsKey);
+        var context = getViewStateContext();
+        var allFolds = PreferencesManager.getViewState(FOLDS_PREF_KEY, context);
         allFolds[path] = simplify(folds);
-        PreferencesManager.setViewState(foldsKey, allFolds);
+        PreferencesManager.setViewState(FOLDS_PREF_KEY, allFolds, context);
     }
 
     /**
@@ -111,17 +123,12 @@ define(function (require, exports, module) {
       * Clears all the saved line folds for all documents.
       */
     function clearAllFolds() {
-        PreferencesManager.setViewState(foldsKey, {});
+        PreferencesManager.setViewState(FOLDS_PREF_KEY, {});
     }
 
     module.exports.getFolds = getFolds;
-
     module.exports.setFolds = setFolds;
-
     module.exports.getSetting = getSetting;
-
     module.exports.clearAllFolds = clearAllFolds;
-
-    module.exports.prefBase = prefs;
-
+    module.exports.prefsObject = prefs;
 });
