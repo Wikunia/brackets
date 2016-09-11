@@ -57,6 +57,8 @@ Having problems starting Brackets the first time, or not sure how to use Bracket
 review [Troubleshooting](https://github.com/adobe/brackets/wiki/Troubleshooting), which helps 
 you to fix common problems and find extra help if needed.
 
+For a list of common Linux issues and workarounds you can [visit this guide](https://nathanjplummer.github.io/Brackets/).
+
 
 Helping Brackets
 ----------------
@@ -111,7 +113,8 @@ Not sure you needed the exclamation point there, but we like your enthusiasm.
 
 #### Contact info
 
-* **Slack:** [Brackets on Slack](https://brackets.slack.com) (You can join by [requesting an invite](https://brackets-slack.herokuapp.com/))
+* **E-mail:** [admin@brackets.io](mailto:admin@brackets.io)
+* **Slack:** [Brackets on Slack](https://brackets.slack.com) (You can join by sending a mail to [admin@brackets.io](mailto:admin@brackets.io) with the subject line `slack registration request` specifying the email addresses you would like to register).
 * **Developers mailing list:** http://groups.google.com/group/brackets-dev
 * **Twitter:** [@brackets](https://twitter.com/brackets)
 * **Blog:** http://blog.brackets.io/
