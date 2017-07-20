@@ -29,9 +29,10 @@ define(function (require, exports, module) {
     var Acorn                       = require("node_modules/acorn/dist/acorn");
 
     var LANGUAGE_ID                 = "javascript",
+        JSX_LANGUAGE_ID             = "jsx",
         HTML_LANGUAGE_ID            = "html",
         PHP_LANGUAGE_ID             = "php",
-        SUPPORTED_LANGUAGES         = [LANGUAGE_ID, HTML_LANGUAGE_ID, PHP_LANGUAGE_ID],
+        SUPPORTED_LANGUAGES         = [LANGUAGE_ID, JSX_LANGUAGE_ID, HTML_LANGUAGE_ID, PHP_LANGUAGE_ID],
         SINGLE_QUOTE                = "'",
         DOUBLE_QUOTE                = "\"";
 
@@ -144,7 +145,7 @@ define(function (require, exports, module) {
             t.kind = kind;
             t.origin = "ecmascript";
             if (kind === "string") {
-                if (/[\\\\]*[^\\]"/.test(t.value)) {
+                if (/[^\\]"/.test(t.value)) {
                     t.delimiter = SINGLE_QUOTE;
                 } else {
                     t.delimiter = DOUBLE_QUOTE;

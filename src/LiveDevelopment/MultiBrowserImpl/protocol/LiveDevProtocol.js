@@ -45,8 +45,11 @@ define(function (require, exports, module) {
 
     // Text of the script we'll inject into the browser that handles protocol requests.
     var LiveDevProtocolRemote = require("text!LiveDevelopment/MultiBrowserImpl/protocol/remote/LiveDevProtocolRemote.js"),
-        DocumentObserver = require("text!LiveDevelopment/MultiBrowserImpl/protocol/remote/DocumentObserver.js"),
-        RemoteFunctions = require("text!LiveDevelopment/Agents/RemoteFunctions.js");
+        DocumentObserver      = require("text!LiveDevelopment/MultiBrowserImpl/protocol/remote/DocumentObserver.js"),
+        RemoteFunctions       = require("text!LiveDevelopment/Agents/RemoteFunctions.js"),
+        EditorManager         = require("editor/EditorManager"),
+        LiveDevMultiBrowser   = require("LiveDevelopment/LiveDevMultiBrowser"),
+        HTMLInstrumentation   = require("language/HTMLInstrumentation");
 
     /**
      * @private
@@ -108,6 +111,12 @@ define(function (require, exports, module) {
                 } else {
                     deferred.resolve(msg);
                 }
+            }
+        } else if (msg.tagId) {
+            var editor = EditorManager.getActiveEditor(),
+                position = HTMLInstrumentation.getPositionFromTagId(editor, parseInt(msg.tagId, 10));
+            if (position) {
+                editor.setCursorPos(position.line, position.ch, true);
             }
         } else {
             // enrich received message with clientId
@@ -205,7 +214,7 @@ define(function (require, exports, module) {
         // Inject DocumentObserver into the browser (tracks related documents)
         script += DocumentObserver;
         // Inject remote functions into the browser.
-        script += "window._LD=(" + RemoteFunctions + "())";
+        script += "window._LD=(" + RemoteFunctions + "(" + JSON.stringify(LiveDevMultiBrowser.config) + "))";
         return "<script>\n" + script + "</script>\n";
     }
 

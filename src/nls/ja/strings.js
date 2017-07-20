@@ -35,7 +35,10 @@ define({
 	"NO_MODIFICATION_ALLOWED_ERR": "対象ディレクトリは変更できません。",
 	"NO_MODIFICATION_ALLOWED_ERR_FILE": "ファイルを変更する権限がありません。",
 	"CONTENTS_MODIFIED_ERR": "このファイルは {APP_NAME} 以外で変更されています。",
-	"UNSUPPORTED_ENCODING_ERR": "{APP_NAME} は現在 UTF-8 でエンコードされたテキストファイルのみをサポートしています。",
+	"UNSUPPORTED_ENCODING_ERR": "不明なエンコード形式",
+	"ENCODE_FILE_FAILED_ERR": "{APP_NAME} でファイルの内容をエンコードすることができませんでした。",
+	"DECODE_FILE_FAILED_ERR": "{APP_NAME} でファイルの内容をデコードすることができませんでした。",
+	"UNSUPPORTED_UTF16_ENCODING_ERR": "{APP_NAME} は現在 UTF-16 でエンコードされたテキストファイルに対応していません。",
 	"FILE_EXISTS_ERR": "ファイルまたはディレクトリは既に存在しています。",
 	"FILE": "ファイル",
 	"FILE_TITLE": "ファイル",
@@ -128,7 +131,7 @@ define({
 	"SAVE_CLOSE_MESSAGE": "文書 <span class='dialog-filename'>{0}</span> に加えた変更を保存しますか？",
 	"SAVE_CLOSE_MULTI_MESSAGE": "以下のファイルに対する変更を保存しますか？",
 	"EXT_MODIFIED_TITLE": "外部で変更されました。",
-	"CONFIRM_DELETE_TITLE": "削除の確認",
+	"CONFIRM_DELETE_TITLE": "削除を確認",
 	"CONFIRM_FILE_DELETE": "ファイル <span class='dialog-filename'>{0}</span> を削除してもよろしいですか？",
 	"CONFIRM_FOLDER_DELETE": "<span class='dialog-filename'>{0}</span> フォルダーを削除してもよろしいですか？",
 	"FILE_DELETED_TITLE": "ファイルは削除されました",
@@ -152,8 +155,10 @@ define({
 	"FIND_MATCH_INDEX": "{0} / {1}",
 	"FIND_NO_RESULTS": "該当なし",
 	"FIND_QUERY_PLACEHOLDER": "検索\u2026",
+	"FIND_HISTORY_MAX_COUNT": "検索履歴内の検索項目の最大数",
 	"REPLACE_PLACEHOLDER": "\u2026 に置換",
-	"BUTTON_REPLACE_ALL": "バッチ\u2026",
+	"BUTTON_REPLACE_ALL": "すべて置換",
+	"BUTTON_REPLACE_BATCH": "バッチ\u2026",
 	"BUTTON_REPLACE_ALL_IN_FILES": "置換\u2026",
 	"BUTTON_REPLACE": "置換",
 	"BUTTON_NEXT": "\u25B6",
@@ -209,6 +214,7 @@ define({
 	"FILE_FILTER_DIALOG": "除外セットを編集",
 	"FILE_FILTER_INSTRUCTIONS": "次の文字列やサブストリング、または<a href='{0}' title='{0}'>ワイルドカード</a>のいずれかに一致するファイルおよびフォルダーを除外します。各文字列を新しい行に入力してください。",
 	"FILTER_NAME_PLACEHOLDER": "この除外セットに名前を付ける (オプション)",
+	"FILTER_NAME_REMAINING": "残り {0} 文字",
 	"FILE_FILTER_CLIPPED_SUFFIX": "さらに {0} 件",
 	"FILTER_COUNTING_FILES": "ファイル数を確認中\u2026",
 	"FILTER_FILE_COUNT": "{2}の {1} ファイル中 {0} ファイルを許可",
@@ -288,6 +294,7 @@ define({
 	"STATUSBAR_CODE_INSPECTION_TOOLTIP": "{0}。クリックしてレポートパネルを切り替えます。",
 	"STATUSBAR_DEFAULT_LANG": "(指定なし)",
 	"STATUSBAR_SET_DEFAULT_LANG": ".{0} ファイルのデフォルトとして設定",
+	"STATUSBAR_ENCODING_TOOLTIP": "エンコードを選択",
 
     // CodeInspection: errors/warnings
 	"ERRORS_PANEL_TITLE_MULTIPLE": "{0} 個の問題",
@@ -412,12 +419,15 @@ define({
 	"CMD_CSS_QUICK_EDIT_NEW_RULE": "新規ルール",
 	"CMD_NEXT_DOC": "次の文書",
 	"CMD_PREV_DOC": "前の文書",
+	"CMD_NAVIGATE_BACKWARD": "前に戻る",
+	"CMD_NAVIGATE_FORWARD": "次に進む",
 	"CMD_NEXT_DOC_LIST_ORDER": "リストの次の文書",
 	"CMD_PREV_DOC_LIST_ORDER": "リストの前の文書",
 	"CMD_SHOW_IN_TREE": "ファイルツリー内で表示",
 	"CMD_SHOW_IN_EXPLORER": "エクスプローラーで表示",
 	"CMD_SHOW_IN_FINDER": "Finder で表示",
 	"CMD_SHOW_IN_OS": "OS で表示",
+	"CMD_SWITCH_PANE_FOCUS": "ペインフォーカスの切り替え",
 
     // Help menu commands
 	"HELP_MENU": "ヘルプ",
@@ -451,7 +461,7 @@ define({
 	"ABOUT_TEXT_LINE4": "ドキュメントとソースコードは <a href='https://github.com/adobe/brackets/'>https://github.com/adobe/brackets/</a> から入手できます。",
 	"ABOUT_TEXT_LINE5": "\u2764 および JavaScript を使用して次の人によって作成されました :",
 	"ABOUT_TEXT_LINE6": "多くの人々 (ただし、人物データの読み込みに問題が発生しています)。",
-	"ABOUT_TEXT_WEB_PLATFORM_DOCS": "Web Platform Docs and the Web Platform graphical logo are licensed under a Creative Commons Attribution license, <a href='{WEB_PLATFORM_DOCS_LICENSE}'>CC-BY 3.0 Unported</a>.",
+	"ABOUT_TEXT_MDN_DOCS": "MDN Docs および MDN グラフィックロゴは Creative Commons の帰属ライセンス、<a href='{MDN_DOCS_LICENSE}'>CC-BY-SA 2.5 Unported</a> によってライセンス付与されています。",
 	"UPDATE_NOTIFICATION_TOOLTIP": "{APP_NAME} の新しいビルドを利用できます。詳細はここをクリックしてください。",
 	"UPDATE_AVAILABLE_TITLE": "利用可能なアップデートがあります",
 	"UPDATE_MESSAGE": "{APP_NAME} の新しいビルドが利用できます。新機能の一部を以下にご紹介します :",
@@ -501,6 +511,7 @@ define({
 	"INSTALL_CANCELED": "インストールはキャンセルされました。",
 	"VIEW_COMPLETE_DESCRIPTION": "詳細な説明を表示",
 	"VIEW_TRUNCATED_DESCRIPTION": "省略された説明を表示",
+	"SORT_EXTENSION_METHOD": "downloadCount または publishedDate を使用してエクステンションをソート",
     // These must match the error codes in ExtensionsDomain.Errors.* :
 	"INVALID_ZIP_FILE": "ダウンロードされたコンテンツは有効な zip ファイルではありません。",
 	"MISSING_PACKAGE_JSON": "パッケージに package.json ファイルがありません。",
@@ -511,6 +522,7 @@ define({
 	"INVALID_VERSION_NUMBER": "パッケージバージョン番号 ({0}) は無効です。",
 	"INVALID_BRACKETS_VERSION": "{APP_NAME} 互換文字列 {0} は無効です。",
 	"DISALLOWED_WORDS": "{1} は {0} フィールドでは使用できません。",
+	"NPM_INSTALL_FAILED": "npm install コマンドに失敗しました : {0}",
 	"API_NOT_COMPATIBLE": "拡張機能はこのバージョンの {APP_NAME} と互換性がありません。無効な拡張機能フォルダーにインストールされます。",
 	"MISSING_MAIN": "パッケージに main.js ファイルが含まれていません。",
 	"EXTENSION_ALREADY_INSTALLED": "このパッケージをインストールすると以前にインストールした拡張機能が上書きされます。古い拡張機能を上書きしますか？",
@@ -574,9 +586,12 @@ define({
 	"NO_EXTENSION_MATCHES": "検索条件に一致する拡張機能がありません。",
 	"REGISTRY_SANITY_CHECK_WARNING": "注意 : これらの拡張機能の作成元が {APP_NAME} 以外である可能性があります。拡張機能はレビューされず、ローカルアクセス権が一杯です。不明なソースから拡張機能をインストールするときは十分に注意してください。",
 	"EXTENSIONS_INSTALLED_TITLE": "インストール済み",
+	"EXTENSIONS_DEFAULT_TITLE": "初期設定",
 	"EXTENSIONS_AVAILABLE_TITLE": "入手可能",
 	"EXTENSIONS_THEMES_TITLE": "テーマ",
 	"EXTENSIONS_UPDATES_TITLE": "アップデート",
+	"EXTENSIONS_LAST_UPDATED": "最終更新日",
+	"EXTENSIONS_DOWNLOADS": "ダウンロード",
 
 	"INLINE_EDITOR_NO_MATCHES": "一致するものがありません。",
 	"INLINE_EDITOR_HIDDEN_MATCHES": "一致項目はすべて縮小されています。一致項目を表示するには、右側にリストされているファイルを展開してください。",
@@ -644,6 +659,7 @@ define({
 	"COLOR_EDITOR_RGBA_BUTTON_TIP": "RGBa 形式",
 	"COLOR_EDITOR_HEX_BUTTON_TIP": "16 進形式",
 	"COLOR_EDITOR_HSLA_BUTTON_TIP": "HSLa 形式",
+	"COLOR_EDITOR_0X_BUTTON_TIP": "16 進数 (0x) 形式",
 	"COLOR_EDITOR_USED_COLOR_TIP_SINGULAR": "{0} ({1} 回使用)",
 	"COLOR_EDITOR_USED_COLOR_TIP_PLURAL": "{0} ({1} 回使用)",
 
@@ -663,7 +679,7 @@ define({
     // extensions/default/RecentProjects
 	"CMD_TOGGLE_RECENT_PROJECTS": "最近使用したプロジェクト",
 
-    // extensions/default/WebPlatformDocs
+    // extensions/default/MDNDocs
 	"DOCS_MORE_LINK": "詳細",
 
     // extensions/default/CodeFolding
@@ -694,6 +710,7 @@ define({
 	"DESCRIPTION_CODE_FOLDING_MIN_FOLD_SIZE": "次の行数に達したら折りたたみ可能なセクションのアイコンを表示する",
 	"DESCRIPTION_CODE_FOLDING_SAVE_FOLD_STATES": "ファイルまたはプロジェクトを閉じて再度開く場合に折りたたまれたセクションを記憶するには true",
 	"DESCRIPTION_CODE_FOLDING_MAKE_SELECTIONS_FOLDABLE": "エディター内の選択したテキストでコード折りたたみを有効にするには true",
+	"DESCRIPTION_DISABLED_DEFAULT_EXTENSIONS": "無効化された初期設定のエクステンション",
 	"DESCRIPTION_ATTR_HINTS": "HTML 属性ヒントを有効化/無効化",
 	"DESCRIPTION_CSS_PROP_HINTS": "CSS/LESS/SCSS プロパティヒントを有効化/無効化",
 	"DESCRIPTION_JS_HINTS": "JavaScript のコードヒントを有効化/無効化",
@@ -744,6 +761,7 @@ define({
 	"DESCRIPTION_LANGUAGE_FILE_EXTENSIONS": "ファイル拡張子から言語名への追加のマッピング",
 	"DESCRIPTION_LANGUAGE_FILE_NAMES": "ファイル名から言語名への追加のマッピング",
 	"DESCRIPTION_LINEWISE_COPY_CUT": "何も選択せずにコピーやカットを行うと、カーソルのあるすべての行がコピーまたはカットされます。",
+	"DESCRIPTION_INPUT_STYLE": "CodeMirror による入力とフォーカスの処理方法を選択します。Textarea (初期設定) や counterditable (スクリーンリーダー向け)(不安定) などを選択できます",
 	"DESCRIPTION_LINTING_ENABLED": "コード検証を有効にするには true",
 	"DESCRIPTION_ASYNC_TIMEOUT": "非同期の構文チェックがタイムアウトするまでの時間 (ミリ秒)",
 	"DESCRIPTION_LINTING_PREFER": "最初に実行する構文チェックの配列",
@@ -787,5 +805,7 @@ define({
 	"DEFAULT_PREFERENCES_JSON_DEFAULT": "デフォルト",
 	"DESCRIPTION_PURE_CODING_SURFACE": "{APP_NAME} でコードのみモードを有効にし、その他すべての UI エレメントを非表示にするには true",
 	"DESCRIPTION_INDENT_LINE_COMMENT": "行コメントのインデントを有効にするには true",
-	"DESCRIPTION_RECENT_FILES_NAV": "最近使用したファイルのナビゲーションを有効化/無効化"
+	"DESCRIPTION_RECENT_FILES_NAV": "最近使用したファイルのナビゲーションを有効化/無効化",
+	"DESCRIPTION_LIVEDEV_WEBSOCKET_PORT": "ライブプレビューで WebSocket サーバーが実行されるポート",
+	"DESCRIPTION_LIVE_DEV_HIGHLIGHT_SETTINGS": "ライブプレビューハイライト設定"
 });
